@@ -15,13 +15,13 @@ export function AuroraBackground({
 }) {
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-70">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)]">
         <Sparkles
           background="#FFFDF700"
           particleColor="#C4703F"
-          particleDensity={2}
-          speed={4}
-          particleSpeed={0.5}
+          particleDensity={1}
+          speed={3}
+          particleSpeed={0.4}
         />
       </div>
       <div aria-hidden className="pointer-events-none absolute inset-0">
