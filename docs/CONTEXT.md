@@ -29,8 +29,13 @@ Memory store files: `/config/companies.md` (tracked list — edit to change cove
 - Auth: Supabase, signups disabled, two users exist (see Supabase → Authentication; local creds file `LOGIN-local.txt`, gitignored — **never commit or quote credentials**). Login form maps bare usernames → `<name>@frontier-radar.app`.
 - OriginKit (fetched via their MCP, key in `.env.local` as `ORIGINKIT_API_KEY`, 10 fetches/day, 7 used on 2026-07-22): **in use** = typewriter, scroll-text-reveal, magnetic-hover-button, stardust (masked top band, opacity 25%). **Reverted as unfit** (Framer-trigger/hero-scale issues): scrambletext, curvedmarquee — raw sources kept in `originkit-archive/`. `vendor/` files are `@ts-nocheck` by design.
 - Security audit passed (pre-deploy): no secrets in tree or git history; RLS `authenticated`-only; middleware fails closed (503) in prod without env vars; contact provenance server-side.
+- **UI rebuild planned (2026-07-22, approved direction, not started)**: founder wants boxes + sidebar rebuilt with animated components. Verified via OriginKit MCP: OriginKit = effects only (no structural cards/sidebar/nav) → hybrid sourcing (ReactBits + MagicUI structure, genuine OriginKit effects on top), premium-subtle intensity, zero new npm deps (framer-motion + gsap already installed). **Full plan: `docs/UI-REBUILD-PLAN.md`** — execute it phase by phase (Phase 0 = kit scaffolding), screenshot checkpoint after sidebar+home. OriginKit budget was 7/10 on 2026-07-22; re-check before fetching.
 
-## BLOCKED — next actions (in order)
+## Next actions
+
+**Active workstream — UI rebuild**: follow `docs/UI-REBUILD-PLAN.md` (component mapping, kit layout `src/components/kit/{vendor,adapters}`, sourcing convention → new `docs/UI-KIT.md`, migration phases 0–5, verification list). Assumption Ledger items 2–5 in that file are ASSUMED (founder was AFK) — confirm at the screenshot checkpoint.
+
+## BLOCKED — agent go-live (in order)
 
 1. Vercel → Settings → **Deployment Protection → Vercel Authentication → "Only Preview Deployments"** (currently the SSO intercepts everything, including the agent's future POSTs). Get the exact production URL from the dashboard (Visit button). Note: `frontier-radar.vercel.app` belongs to a **stranger's project** — the real domain is `frontier-radar-*-mathis-14s-projects.vercel.app` shaped.
 2. **Rotate `INGEST_TOKEN`** before go-live (`openssl rand -hex 32` → `.env.local` + Vercel env) — the current one touched a session transcript.
