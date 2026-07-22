@@ -50,7 +50,7 @@ export default async function HomePage() {
           <p className="text-sm text-muted-foreground">
             {today ? `Daily synthesis · ${today.run_date}` : "Daily synthesis"}
           </p>
-          <h1 className="mt-1 font-heading text-4xl font-semibold tracking-tight">
+          <h1 className="mt-1 font-heading text-2xl font-semibold tracking-tight">
             <ScrambleText text="Road to AGI" />
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -61,7 +61,9 @@ export default async function HomePage() {
           </div>
           {today ? (
             <BlurReveal delay={150}>
-              <p className="mt-5 max-w-3xl leading-relaxed">{today.narrative}</p>
+              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-foreground/90">
+                {today.narrative}
+              </p>
             </BlurReveal>
           ) : (
             <p className="mt-5 text-muted-foreground">

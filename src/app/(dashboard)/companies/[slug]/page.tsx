@@ -41,7 +41,7 @@ export default async function CompanyPage({
           {company.name.slice(0, 1)}
         </span>
         <div>
-          <h1 className="font-heading text-3xl font-semibold tracking-tight">{company.name}</h1>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight">{company.name}</h1>
           <p className="text-sm text-muted-foreground">
             Everything the agent has filed for this company.
           </p>

@@ -39,7 +39,7 @@ export default async function BenchmarksPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Benchmarks</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight">Benchmarks</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Latest reported scores per model — each cell carries its own as-of date; scores are
           never aggregated across benchmarks.
