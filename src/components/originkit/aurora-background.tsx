@@ -1,8 +1,9 @@
 "use client";
 
-// OriginKit slot: background-animation category (soft gradient/aurora).
-// Stand-in — swap for genuine OriginKit source via MCP once the API key is set.
+// Soft cream aurora blobs + OriginKit "Stardust" particle field (genuine source:
+// vendor/stardust/, fetched via the OriginKit MCP; 8-digit hex alpha = transparent bg).
 
+import Sparkles from "./vendor/stardust/stardust";
 import { cn } from "@/lib/utils";
 
 export function AuroraBackground({
@@ -14,6 +15,15 @@ export function AuroraBackground({
 }) {
   return (
     <div className={cn("relative overflow-hidden", className)}>
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-70">
+        <Sparkles
+          background="#FFFDF700"
+          particleColor="#C4703F"
+          particleDensity={2}
+          speed={4}
+          particleSpeed={0.5}
+        />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 -left-16 size-[26rem] rounded-full bg-[#e8cdb4]/60 blur-3xl animate-[aurora-a_14s_ease-in-out_infinite]" />
         <div className="absolute -bottom-28 left-1/3 size-[24rem] rounded-full bg-[#d9e0c5]/50 blur-3xl animate-[aurora-b_18s_ease-in-out_infinite]" />

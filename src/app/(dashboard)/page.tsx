@@ -1,6 +1,7 @@
 import { AuroraBackground } from "@/components/originkit/aurora-background";
-import { BlurReveal } from "@/components/originkit/blur-reveal";
+import { RevealText } from "@/components/originkit/reveal-text";
 import { ScrambleText } from "@/components/originkit/scramble-text";
+import { TypewriterText } from "@/components/originkit/typewriter-text";
 import { BenchmarkTrend } from "@/components/charts/benchmark-trend";
 import { GaugeChip } from "@/components/sections/gauge-chip";
 import { NewsList } from "@/components/sections/news-list";
@@ -55,16 +56,18 @@ export default async function HomePage() {
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {today && <GaugeChip gauge={today.gauge} />}
-            <span className="text-sm text-muted-foreground">
-              capability movement today, judged only from sourced items
-            </span>
+            <TypewriterText
+              texts={[
+                "capability movement today, judged only from sourced items",
+                "news · benchmarks · community · finance, every morning",
+                "gathered by your managed agent while you slept",
+              ]}
+            />
           </div>
           {today ? (
-            <BlurReveal delay={150}>
-              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-foreground/90">
-                {today.narrative}
-              </p>
-            </BlurReveal>
+            <div className="mt-5 max-w-2xl">
+              <RevealText text={today.narrative} />
+            </div>
           ) : (
             <p className="mt-5 text-muted-foreground">
               No synthesis yet — it lands with the agent&apos;s first morning run.

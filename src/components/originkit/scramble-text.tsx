@@ -1,48 +1,34 @@
 "use client";
 
-// OriginKit slot: "Scramble Text" (text category).
-// Stand-in implementation — swap for the genuine OriginKit source via its MCP
-// (originkit_get, stack: nextjs, styling: tailwind) once the API key is set.
+// OriginKit "Scramble Text" (genuine source: vendor/scrambletext/, fetched via
+// the OriginKit MCP). This file adapts it to the app's prop API.
 
-import { useEffect, useRef, useState } from "react";
+import GlitchCharReveal from "./vendor/scrambletext/scrambletext";
 import { cn } from "@/lib/utils";
-
-const CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 export function ScrambleText({
   text,
   className,
-  speed = 30,
 }: {
   text: string;
   className?: string;
   speed?: number;
 }) {
-  const [display, setDisplay] = useState(text);
-  const frame = useRef(0);
-
-  useEffect(() => {
-    frame.current = 0;
-    const interval = setInterval(() => {
-      frame.current += 1;
-      const settled = Math.floor(frame.current / 2);
-      setDisplay(
-        text
-          .split("")
-          .map((ch, i) => {
-            if (ch === " " || i < settled) return ch;
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          })
-          .join("")
-      );
-      if (settled >= text.length) clearInterval(interval);
-    }, speed);
-    return () => clearInterval(interval);
-  }, [text, speed]);
-
   return (
-    <span className={cn("font-heading", className)} aria-label={text}>
-      {display}
+    <span className={cn("inline-block", className)}>
+      <GlitchCharReveal
+        words={text}
+        tag="span"
+        color="var(--foreground)"
+        font={{
+          fontFamily: "Fraunces, Georgia, serif",
+          fontSize: 30,
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+          lineHeight: "1.2em",
+          textAlign: "left",
+        }}
+      />
     </span>
   );
 }

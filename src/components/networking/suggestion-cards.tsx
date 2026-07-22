@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { X } from "lucide-react";
-import { ShimmerButton } from "@/components/originkit/shimmer-button";
+import { MagneticActionButton } from "@/components/originkit/magnetic-button";
 import { SpotlightCard } from "@/components/originkit/spotlight-card";
 import { Button } from "@/components/ui/button";
 import type { SuggestedContactRow } from "@/lib/types";
@@ -62,9 +62,11 @@ export function SuggestionCards({ suggestions }: { suggestions: SuggestedContact
           </div>
           {s.reason && <p className="mt-2 text-sm text-muted-foreground">{s.reason}</p>}
           <div className="mt-4 flex items-center gap-2">
-            <ShimmerButton disabled={busy === s.id} onClick={() => act(s.id, "accepted")}>
-              Accept
-            </ShimmerButton>
+            <MagneticActionButton
+              label="Accept"
+              disabled={busy === s.id}
+              onClick={() => act(s.id, "accepted")}
+            />
             <Button
               variant="ghost"
               size="sm"
