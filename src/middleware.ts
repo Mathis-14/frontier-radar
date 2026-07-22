@@ -4,8 +4,12 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_PATHS = ["/login", "/api/ingest"];
 
 export async function middleware(request: NextRequest) {
-  // Before Supabase env vars are set, run open (local preview with fixture data).
+  // Before Supabase env vars are set, run open (local preview with fixture data) —
+  // but in production, fail closed rather than serving an unauthenticated app.
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+      return new NextResponse("Service not configured", { status: 503 });
+    }
     return NextResponse.next();
   }
 

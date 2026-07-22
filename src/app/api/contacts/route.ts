@@ -11,7 +11,8 @@ const contactSchema = z.object({
   role: z.string().optional().default(""),
   status: z.enum(["met", "to_contact"]).default("to_contact"),
   notes: z.string().optional().default(""),
-  source: z.enum(["manual", "agent"]).default("manual"),
+  // no client-supplied `source`: provenance is set server-side (manual here,
+  // "agent" only via the suggestion-accept path below)
 });
 
 const suggestionActionSchema = z.object({

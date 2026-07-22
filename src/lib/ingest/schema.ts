@@ -5,10 +5,13 @@ import { z } from "zod";
 
 const dateStr = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "expected YYYY-MM-DD");
 
+// http(s) only — the agent ingests untrusted web content, so javascript:/data: schemes must never reach an href
+const httpUrl = z.url({ protocol: /^https?$/ });
+
 export const newsItemSchema = z.object({
   company: z.string().min(1),
   title: z.string().min(1),
-  url: z.string().url(),
+  url: httpUrl,
   summary: z.string().optional().default(""),
   published_at: dateStr.optional(),
   category: z.enum(["announcement", "model", "research", "other"]).default("other"),
@@ -20,7 +23,7 @@ export const modelReleaseSchema = z.object({
   released_on: dateStr.optional(),
   tier: z.enum(["frontier", "mid", "small"]).default("frontier"),
   notes: z.string().optional().default(""),
-  source_url: z.string().url(),
+  source_url: httpUrl,
 });
 
 export const benchmarkScoreSchema = z.object({
@@ -29,7 +32,7 @@ export const benchmarkScoreSchema = z.object({
   company: z.string().optional(),
   score: z.number(),
   as_of: dateStr,
-  source_url: z.string().url(),
+  source_url: httpUrl,
 });
 
 export const financeEventSchema = z.object({
@@ -39,13 +42,13 @@ export const financeEventSchema = z.object({
   valuation_usd: z.number().nullable().optional(),
   round_name: z.string().nullable().optional(),
   announced_on: dateStr,
-  source_url: z.string().url(),
+  source_url: httpUrl,
 });
 
 export const communityPostSchema = z.object({
   company: z.string().min(1),
   source: z.enum(["hn", "reddit", "x"]),
-  url: z.string().url(),
+  url: httpUrl,
   title: z.string().optional().default(""),
   sentiment: z.enum(["positive", "negative", "mixed", "neutral"]).default("neutral"),
   summary: z.string().optional().default(""),
@@ -60,7 +63,7 @@ export const agiDailySchema = z.object({
       z.object({
         company: z.string(),
         what: z.string(),
-        source_url: z.string().url().optional(),
+        source_url: httpUrl.optional(),
       })
     )
     .default([]),
@@ -71,7 +74,7 @@ export const suggestedContactSchema = z.object({
   company: z.string().optional().default(""),
   role: z.string().optional().default(""),
   reason: z.string().optional().default(""),
-  source_url: z.string().url().optional(),
+  source_url: httpUrl.optional(),
 });
 
 export const ingestPayloadSchema = z.object({
