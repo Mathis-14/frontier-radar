@@ -1,0 +1,144 @@
+{
+  "version": "1",
+  "run_id": "fixture-2026-07-21",
+  "run_date": "2026-07-21",
+  "news": [
+    {
+      "company": "anthropic",
+      "title": "Anthropic ships Claude Fable 5, first of the Mythos-class tier",
+      "url": "https://example.com/anthropic-fable-5",
+      "summary": "New model family positioned above Opus; long-horizon agentic work highlighted. (Fixture item — replaced by the agent's first real run.)",
+      "published_at": "2026-07-20",
+      "category": "model"
+    },
+    {
+      "company": "openai",
+      "title": "OpenAI details GPT-5.4 tool-use improvements",
+      "url": "https://example.com/openai-gpt-5-4-tools",
+      "summary": "Post covering parallel tool orchestration and cheaper cached inference. (Fixture item.)",
+      "published_at": "2026-07-19",
+      "category": "announcement"
+    },
+    {
+      "company": "google-deepmind",
+      "title": "DeepMind publishes new agent-safety evals suite",
+      "url": "https://example.com/deepmind-agent-evals",
+      "summary": "Open benchmark suite for autonomous-agent reliability. (Fixture item.)",
+      "published_at": "2026-07-20",
+      "category": "research"
+    },
+    {
+      "company": "mistral",
+      "title": "Mistral releases updated Large model with EU-hosted inference",
+      "url": "https://example.com/mistral-large-update",
+      "summary": "Focus on sovereign deployments and function-calling accuracy. (Fixture item.)",
+      "published_at": "2026-07-18",
+      "category": "model"
+    }
+  ],
+  "model_releases": [
+    {
+      "company": "anthropic",
+      "model_name": "Claude Fable 5",
+      "released_on": "2026-07-20",
+      "tier": "frontier",
+      "notes": "Mythos-class tier above Opus. (Fixture.)",
+      "source_url": "https://example.com/anthropic-fable-5"
+    },
+    {
+      "company": "mistral",
+      "model_name": "Mistral Large 26.07",
+      "released_on": "2026-07-18",
+      "tier": "mid",
+      "notes": "EU-hosted inference update. (Fixture.)",
+      "source_url": "https://example.com/mistral-large-update"
+    }
+  ],
+  "benchmarks": [
+    { "benchmark": "lmarena-text", "model": "Claude Fable 5", "company": "anthropic", "score": 1492, "as_of": "2026-07-21", "source_url": "https://example.com/lmarena" },
+    { "benchmark": "lmarena-text", "model": "GPT-5.4", "company": "openai", "score": 1480, "as_of": "2026-07-21", "source_url": "https://example.com/lmarena" },
+    { "benchmark": "lmarena-text", "model": "Gemini 3.5 Pro", "company": "google-deepmind", "score": 1474, "as_of": "2026-07-21", "source_url": "https://example.com/lmarena" },
+    { "benchmark": "swe-bench-verified", "model": "Claude Fable 5", "company": "anthropic", "score": 84.1, "as_of": "2026-07-21", "source_url": "https://example.com/swebench" },
+    { "benchmark": "swe-bench-verified", "model": "GPT-5.4", "company": "openai", "score": 81.6, "as_of": "2026-07-21", "source_url": "https://example.com/swebench" },
+    { "benchmark": "gpqa-diamond", "model": "Gemini 3.5 Pro", "company": "google-deepmind", "score": 89.2, "as_of": "2026-07-21", "source_url": "https://example.com/gpqa" },
+    { "benchmark": "gpqa-diamond", "model": "Claude Fable 5", "company": "anthropic", "score": 90.4, "as_of": "2026-07-21", "source_url": "https://example.com/gpqa" }
+  ],
+  "finance": [
+    {
+      "company": "openai",
+      "event_type": "valuation_report",
+      "valuation_usd": 500000000000,
+      "announced_on": "2026-07-15",
+      "source_url": "https://example.com/openai-valuation"
+    },
+    {
+      "company": "anthropic",
+      "event_type": "valuation_report",
+      "valuation_usd": 350000000000,
+      "announced_on": "2026-07-10",
+      "source_url": "https://example.com/anthropic-valuation"
+    },
+    {
+      "company": "mistral",
+      "event_type": "funding_round",
+      "amount_usd": 2000000000,
+      "valuation_usd": 18000000000,
+      "round_name": "Series D",
+      "announced_on": "2026-07-12",
+      "source_url": "https://example.com/mistral-round"
+    }
+  ],
+  "community": [
+    {
+      "company": "anthropic",
+      "source": "hn",
+      "url": "https://example.com/hn-fable-5",
+      "title": "Claude Fable 5 first impressions thread",
+      "sentiment": "positive",
+      "summary": "Devs report strong long-context agent runs; pricing debated. (Fixture.)",
+      "posted_at": "2026-07-21"
+    },
+    {
+      "company": "openai",
+      "source": "reddit",
+      "url": "https://example.com/reddit-gpt54",
+      "title": "r/LocalLLaMA on GPT-5.4 tool-use claims",
+      "sentiment": "mixed",
+      "summary": "Skepticism about benchmark deltas vs real-world gains. (Fixture.)",
+      "posted_at": "2026-07-20"
+    },
+    {
+      "company": "deepseek",
+      "source": "hn",
+      "url": "https://example.com/hn-deepseek",
+      "title": "DeepSeek's new open-weights release discussion",
+      "sentiment": "positive",
+      "summary": "Community praises cost/performance of the latest open drop. (Fixture.)",
+      "posted_at": "2026-07-19"
+    }
+  ],
+  "agi_daily": {
+    "narrative": "A busy 24 hours at the frontier. Anthropic's Claude Fable 5 launch is the day's defining event: a new tier above Opus with LMArena and SWE-bench Verified leads over GPT-5.4, and early Hacker News reports of materially longer autonomous runs. OpenAI answered with orchestration and caching improvements rather than a new model, while DeepMind's new agent-safety eval suite signals where measurement is heading: reliability over raw capability. Mistral's EU-hosted Large refresh keeps the sovereign-inference lane competitive. Net: capability moved visibly on coding and reasoning benchmarks, driven by one frontier release — this is fixture data and will be replaced by the agent's first real run.",
+    "gauge": "notable",
+    "movers": [
+      { "company": "anthropic", "what": "Claude Fable 5 tops LMArena text and SWE-bench Verified", "source_url": "https://example.com/anthropic-fable-5" },
+      { "company": "google-deepmind", "what": "Open agent-safety eval suite published", "source_url": "https://example.com/deepmind-agent-evals" }
+    ]
+  },
+  "suggested_contacts": [
+    {
+      "full_name": "Jane Doe",
+      "company": "anthropic",
+      "role": "Member of Technical Staff, agents",
+      "reason": "Presented the Fable 5 agentic-evals results in the launch livestream. (Fixture.)",
+      "source_url": "https://example.com/fable-5-livestream"
+    },
+    {
+      "full_name": "John Smith",
+      "company": "mistral",
+      "role": "Head of Developer Relations",
+      "reason": "Quoted on the EU-hosted inference launch; active in the Paris AI scene. (Fixture.)",
+      "source_url": "https://example.com/mistral-large-update"
+    }
+  ]
+}
