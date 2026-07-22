@@ -20,7 +20,11 @@ export default function LoginPage() {
     setPending(true);
     setError(null);
     const supabase = createSupabaseBrowserClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    // bare usernames map to the app's login domain ("Claude" → claude@frontier-radar.app)
+    const resolvedEmail = email.includes("@")
+      ? email
+      : `${email.trim().toLowerCase()}@frontier-radar.app`;
+    const { error } = await supabase.auth.signInWithPassword({ email: resolvedEmail, password });
     setPending(false);
     if (error) {
       setError(error.message);
@@ -42,10 +46,11 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={onSubmit} className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Username or email</Label>
               <Input
                 id="email"
-                type="email"
+                type="text"
+                autoCapitalize="none"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
