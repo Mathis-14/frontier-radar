@@ -1,4 +1,5 @@
 import { AuroraBackground } from "@/components/kit/aurora-background";
+import { BeamBorder } from "@/components/kit/beam-border";
 import { RevealText } from "@/components/kit/reveal-text";
 import { ScrambleText } from "@/components/kit/scramble-text";
 import { TypewriterText } from "@/components/kit/typewriter-text";
@@ -47,6 +48,7 @@ export default async function HomePage() {
     <div className="space-y-6">
       {/* Hero — OriginKit slots: aurora background, scramble headline, blur-reveal narrative */}
       <AuroraBackground className="rounded-2xl border border-border bg-card">
+        <BeamBorder />
         <div className="p-8">
           <p className="text-sm text-muted-foreground">
             {today ? `Daily synthesis · ${today.run_date}` : "Daily synthesis"}

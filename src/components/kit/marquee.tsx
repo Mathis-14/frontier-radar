@@ -1,8 +1,10 @@
 "use client";
 
-// OriginKit slot: marquee / ticker strip.
-// Stand-in — swap for genuine OriginKit source via MCP once the API key is set.
+// Themed adapter over vendored MagicUI Marquee (docs/UI-KIT.md):
+// edge-faded ticker strip, pauses on hover. Keeps the original adapter API so
+// section code is untouched; duration maps to the vendor's --duration var.
 
+import { Marquee as VendorMarquee } from "./vendor/magicui/marquee";
 import { cn } from "@/lib/utils";
 
 export function Marquee({
@@ -15,22 +17,15 @@ export function Marquee({
   durationSeconds?: number;
 }) {
   return (
-    <div className={cn("group relative overflow-hidden", className)}>
-      <div
-        className="flex w-max gap-8 pr-8 animate-[marquee_linear_infinite] group-hover:[animation-play-state:paused]"
-        style={{ animationDuration: `${durationSeconds}s` }}
-      >
-        <div className="flex shrink-0 items-center gap-8">{children}</div>
-        <div className="flex shrink-0 items-center gap-8" aria-hidden>
-          {children}
-        </div>
-      </div>
-      <style jsx>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
-    </div>
+    <VendorMarquee
+      pauseOnHover
+      className={cn(
+        "p-0 [--gap:2rem] [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:[&>div]:animate-none",
+        className
+      )}
+      style={{ "--duration": `${durationSeconds}s` } as React.CSSProperties}
+    >
+      {children}
+    </VendorMarquee>
   );
 }

@@ -1,48 +1,42 @@
 "use client";
 
-// OriginKit slot: number ticker / count-up text.
-// Stand-in — swap for genuine OriginKit source via MCP once the API key is set.
+// Themed adapter over vendored MagicUI NumberTicker (docs/UI-KIT.md).
+// Takes the serializable format hint ("int" | "usd") so server components can
+// pass tiles across the RSC boundary; "usd" decomposes into prefix/suffix
+// around the animated compact value, mirroring lib/format.ts formatUsd.
 
-import { useEffect, useRef, useState } from "react";
+import { NumberTicker as VendorNumberTicker } from "./vendor/magicui/number-ticker";
 import { cn } from "@/lib/utils";
+
+export type TickerFormat = "int" | "usd";
+
+function usdParts(n: number) {
+  if (n >= 1e12) return { value: n / 1e12, decimals: 1, suffix: "T" };
+  if (n >= 1e9) return { value: n / 1e9, decimals: n >= 1e10 ? 0 : 1, suffix: "B" };
+  if (n >= 1e6) return { value: n / 1e6, decimals: 0, suffix: "M" };
+  return { value: n, decimals: 0, suffix: "" };
+}
 
 export function NumberTicker({
   value,
-  format = (n: number) => Math.round(n).toLocaleString("en-US"),
-  duration = 900,
+  format = "int",
   className,
 }: {
   value: number;
-  format?: (n: number) => string;
-  duration?: number;
+  format?: TickerFormat;
   className?: string;
 }) {
-  const [display, setDisplay] = useState(0);
-  const started = useRef(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting || started.current) return;
-      started.current = true;
-      const t0 = performance.now();
-      const tick = (t: number) => {
-        const p = Math.min((t - t0) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        setDisplay(value * eased);
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value, duration]);
-
+  const parts =
+    format === "usd" ? usdParts(value) : { value, decimals: 0, suffix: "" };
   return (
-    <span ref={ref} className={cn("tabular-nums", className)}>
-      {format(display)}
+    <span className={cn("tabular-nums", className)}>
+      {format === "usd" && "$"}
+      <VendorNumberTicker
+        value={parts.value}
+        decimalPlaces={parts.decimals}
+        className="tracking-normal text-current dark:text-current"
+      />
+      {parts.suffix}
     </span>
   );
 }
