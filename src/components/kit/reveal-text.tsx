@@ -12,9 +12,9 @@ export function RevealText({ text }: { text: string }) {
       color="var(--foreground)"
       font={{
         fontFamily: "Inter, sans-serif",
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: "400",
-        lineHeight: "170%",
+        lineHeight: "165%",
         letterSpacing: 0,
         textAlign: "left",
       }}

@@ -9,6 +9,7 @@ import { NewsList } from "@/components/sections/news-list";
 import { ReleaseTicker } from "@/components/sections/release-ticker";
 import { StatTiles } from "@/components/sections/stat-tiles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { splitIntoParagraphs } from "@/lib/format";
 import {
   getAgiDaily,
   getBenchmarkScores,
@@ -53,7 +54,7 @@ export default async function HomePage() {
           <p className="text-sm text-muted-foreground">
             {today ? `Daily synthesis · ${today.run_date}` : "Daily synthesis"}
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold tracking-tight">
+          <h1 className="mt-1 font-heading text-2xl font-semibold tracking-tight text-balance">
             <ScrambleText text="Road to AGI" />
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -67,8 +68,10 @@ export default async function HomePage() {
             />
           </div>
           {today ? (
-            <div className="mt-5 max-w-2xl">
-              <RevealText text={today.narrative} />
+            <div className="mt-5 max-w-prose space-y-4">
+              {splitIntoParagraphs(today.narrative).map((paragraph, i) => (
+                <RevealText key={i} text={paragraph} />
+              ))}
             </div>
           ) : (
             <p className="mt-5 text-muted-foreground">
@@ -87,7 +90,7 @@ export default async function HomePage() {
                         companies.find((c) => c.slug === m.company)?.color ?? "var(--chart-1)",
                     }}
                   />
-                  <span>
+                  <span className="text-pretty">
                     <span className="font-medium">
                       {companies.find((c) => c.slug === m.company)?.name ?? m.company}
                     </span>{" "}
