@@ -53,7 +53,7 @@ src/components/kit/
   *.tsx                   # typed themed ADAPTERS — the only import surface for app code
 ```
 
-Rules, written to a new `docs/UI-KIT.md` (linked from `AGENTS.md`; `docs/CONTEXT.md` State updated on ship):
+Rules, written to a new `docs/UI-KIT.md` (linked from `AGENTS.md`; `docs/agent-context/roadmap-state.md` updated on ship):
 1. Sourcing map: OriginKit MCP = effects (search free, get_component costs budget — always search first); ReactBits = structural cards/nav/lists; MagicUI = tickers/marquees/borders/buttons; 21st.dev only for a named gap. Unfit fetches archived in `originkit-archive/` so budget is never re-spent.
 2. Vendor header contract: `// @ts-nocheck — vendored <lib>` + source URL + fetch date + local modifications list.
 3. Pages/sections never import `kit/vendor/**` — adapters only, fully typed, theme via CSS vars (hardcoded vendor colors lifted to props).
@@ -72,7 +72,7 @@ Tomorrow: image-reveal for company [slug] headers, second text effect for sectio
 - **Phase 1 — sidebar + home**: nav pill, radar-sweep brand, dot pattern, hero border-beam, OriginKit fetches, marquee + ticker swaps, news stagger.
 - **📸 CHECKPOINT** — `pnpm build && pnpm start -p 3111`, screenshots to the founder; intensity dial adjusted here before propagating.
 - **Phase 2 — companies + [slug]** · **Phase 3 — benchmarks + finance** · **Phase 4 — networking** (per mapping above).
-- **Phase 5 — polish**: `prefers-reduced-motion` audit (marquee/beam/sweep pause or degrade), dark-mode pass, delete dead stand-ins, update `docs/CONTEXT.md`, commit + push → Vercel.
+- **Phase 5 — polish**: `prefers-reduced-motion` audit (marquee/beam/sweep pause or degrade), dark-mode pass, delete dead stand-ins, update `docs/agent-context/roadmap-state.md`, commit + push → Vercel.
 
 ## 5. Verification
 
