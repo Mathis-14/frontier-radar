@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { StaggerItem } from "@/components/kit/stagger-item";
 import { Badge } from "@/components/ui/badge";
 import type { NewsRow } from "@/lib/types";
 
@@ -12,8 +13,8 @@ export function NewsList({ items, showCompany = true }: { items: NewsRow[]; show
   }
   return (
     <ul className="divide-y divide-border/70">
-      {items.map((n) => (
-        <li key={n.id} className="py-3">
+      {items.map((n, i) => (
+        <StaggerItem key={n.id} index={i} className="py-3">
           <a href={n.url} target="_blank" rel="noreferrer" className="group block">
             <div className="flex items-start justify-between gap-3">
               <p className="font-medium leading-snug group-hover:text-primary transition-colors">
@@ -42,7 +43,7 @@ export function NewsList({ items, showCompany = true }: { items: NewsRow[]; show
               {n.published_at ?? ""}
             </p>
           </a>
-        </li>
+        </StaggerItem>
       ))}
     </ul>
   );

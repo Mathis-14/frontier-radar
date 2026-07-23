@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { CompanyLogo } from "@/components/company-logo";
 import { CommunityList } from "@/components/sections/community-list";
 import { NewsList } from "@/components/sections/news-list";
 import { Badge } from "@/components/ui/badge";
@@ -33,13 +34,12 @@ export default async function CompanyPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <span
-          aria-hidden
-          className="flex size-12 items-center justify-center rounded-xl text-lg font-semibold text-white"
-          style={{ background: company.color ?? "var(--chart-1)" }}
-        >
-          {company.name.slice(0, 1)}
-        </span>
+        <CompanyLogo
+          slug={company.slug}
+          name={company.name}
+          color={company.color}
+          className="size-12 rounded-xl text-lg"
+        />
         <div>
           <h1 className="font-heading text-2xl font-semibold tracking-tight">{company.name}</h1>
           <p className="text-sm text-muted-foreground">

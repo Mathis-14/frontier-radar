@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SpotlightCard } from "@/components/originkit/spotlight-card";
+import { CompanyLogo } from "@/components/company-logo";
+import { SpotlightCard } from "@/components/kit/spotlight-card";
 import { getCompanies, getModelReleases, getNews } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -27,13 +28,7 @@ export default async function CompaniesPage() {
             <Link key={c.slug} href={`/companies/${c.slug}`}>
               <SpotlightCard className="h-full p-5">
                 <div className="flex items-center gap-3">
-                  <span
-                    aria-hidden
-                    className="flex size-9 items-center justify-center rounded-lg text-sm font-semibold text-white"
-                    style={{ background: c.color ?? "var(--chart-1)" }}
-                  >
-                    {c.name.slice(0, 1)}
-                  </span>
+                  <CompanyLogo slug={c.slug} name={c.name} color={c.color} className="size-9 text-sm" />
                   <div>
                     <p className="font-heading text-lg font-semibold">{c.name}</p>
                     <p className="text-xs text-muted-foreground">

@@ -1,13 +1,15 @@
-import { AuroraBackground } from "@/components/originkit/aurora-background";
-import { RevealText } from "@/components/originkit/reveal-text";
-import { ScrambleText } from "@/components/originkit/scramble-text";
-import { TypewriterText } from "@/components/originkit/typewriter-text";
+import { AuroraBackground } from "@/components/kit/aurora-background";
+import { BeamBorder } from "@/components/kit/beam-border";
+import { BriefExpander } from "@/components/kit/brief-expander";
+import { ScrambleText } from "@/components/kit/scramble-text";
+import { TypewriterText } from "@/components/kit/typewriter-text";
 import { BenchmarkTrend } from "@/components/charts/benchmark-trend";
 import { GaugeChip } from "@/components/sections/gauge-chip";
 import { NewsList } from "@/components/sections/news-list";
 import { ReleaseTicker } from "@/components/sections/release-ticker";
 import { StatTiles } from "@/components/sections/stat-tiles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { splitLead } from "@/lib/format";
 import {
   getAgiDaily,
   getBenchmarkScores,
@@ -47,11 +49,12 @@ export default async function HomePage() {
     <div className="space-y-6">
       {/* Hero — OriginKit slots: aurora background, scramble headline, blur-reveal narrative */}
       <AuroraBackground className="rounded-2xl border border-border bg-card">
+        <BeamBorder />
         <div className="p-8">
           <p className="text-sm text-muted-foreground">
             {today ? `Daily synthesis · ${today.run_date}` : "Daily synthesis"}
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold tracking-tight">
+          <h1 className="mt-1 font-heading text-2xl font-semibold tracking-tight text-balance">
             <ScrambleText text="Road to AGI" />
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -65,8 +68,8 @@ export default async function HomePage() {
             />
           </div>
           {today ? (
-            <div className="mt-5 max-w-2xl">
-              <RevealText text={today.narrative} />
+            <div className="mt-5">
+              <BriefExpander {...splitLead(today.narrative)} />
             </div>
           ) : (
             <p className="mt-5 text-muted-foreground">
@@ -85,7 +88,7 @@ export default async function HomePage() {
                         companies.find((c) => c.slug === m.company)?.color ?? "var(--chart-1)",
                     }}
                   />
-                  <span>
+                  <span className="text-pretty">
                     <span className="font-medium">
                       {companies.find((c) => c.slug === m.company)?.name ?? m.company}
                     </span>{" "}

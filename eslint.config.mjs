@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Verbatim upstream vendor code (docs/UI-KIT.md) — not held to local lint rules.
+    "src/components/kit/vendor/**",
   ]),
 ]);
 
