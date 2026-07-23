@@ -6,11 +6,15 @@ skips existing objects). This file holds the lookup recipes and API facts around
 ## Live objects (recipe, never hardcode)
 
 ```bash
-cat ../agent/IDS.env   # AGENT_ID (v2, claude-opus-4-8), ENV_ID, MEMSTORE_ID, SESSION_ID
+cat ../agent/IDS.env   # AGENT_ID (coordinator, claude-opus-4-8), AGENT_VERSION (last line wins),
+                       # RADAR_{NEWS,BENCHMARKS,FINANCE,COMMUNITY}_{ID,VERSION} (claude-sonnet-4-6),
+                       # ENV_ID, MEMSTORE_ID, SESSION_ID, REGRESSION_SESSION_ID
 ```
 
-As of 2026-07-23 there is **no VAULT_ID and no DEPLOYMENT_ID** — all dashboard data came
-from the single manual test session; the 07:00 Europe/Paris cron does not exist yet.
+As of 2026-07-23 the agent is a **multiagent coordinator (v3)** with the 4 specialists pinned
+at v1 (definitions in `../agent/subagents/*.json`; see `multiagent-plan.md`). There is still
+**no VAULT_ID and no DEPLOYMENT_ID** — all dashboard data came from the single manual test
+session; the 07:00 Europe/Paris cron does not exist yet.
 
 Memory store files: `/config/companies.md` (tracked list — edit to change coverage, no
 redeploy), `/reported/{urls,models,finance}.md` (21-day dedup), `/benchmarks/latest.md`.
@@ -44,7 +48,9 @@ curl -sS "$BASE/models" "${H[@]:0:4}"   # verify model IDs (claude-sonnet-4-6 co
 - Threads share sandbox/filesystem/vault; each has isolated context and its own
   model/system/tools. `{"type":"self"}` spawns coordinator copies.
 - Roster pinned to versions resolved at coordinator create/update — updating a specialist
-  does NOT propagate until the coordinator is updated too.
+  does NOT propagate until the coordinator is updated too (LAUNCH.md step 1b re-run).
+- Regression gate for agent changes: LAUNCH.md step 5b — files-only session, no vault
+  needed; compare vs `../agent/evals/` and check memory `content_size_bytes` unchanged.
 - Limits: 1 nesting level, 20 unique roster agents, 25 concurrent threads.
 - Docs: platform.claude.com/docs/en/managed-agents/{multiagent-orchestration,agent-setup,
   scheduled-deployments,memory}.
