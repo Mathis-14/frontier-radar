@@ -38,9 +38,14 @@ export default async function HomePage() {
   const itemsToday = lastRun
     ? Object.values(lastRun.item_counts).reduce((a, b) => a + b, 0)
     : 0;
-  const topArena = benchmarks
-    .filter((b) => b.benchmark === "lmarena-text")
-    .sort((a, b) => b.score - a.score)[0];
+  // feature the benchmark with the most scores instead of pinning one slug
+  const benchmarkCounts = new Map<string, number>();
+  for (const b of benchmarks) {
+    benchmarkCounts.set(b.benchmark, (benchmarkCounts.get(b.benchmark) ?? 0) + 1);
+  }
+  const featuredBenchmark = [...benchmarkCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+  const featuredScores = benchmarks.filter((b) => b.benchmark === featuredBenchmark);
+  const topScore = [...featuredScores].sort((a, b) => b.score - a.score)[0];
   const fundingThisMonth = finance
     .filter((f) => f.amount_usd && f.announced_on.slice(0, 7) === (lastRun?.run_date ?? "").slice(0, 7))
     .reduce((sum, f) => sum + (f.amount_usd ?? 0), 0);
@@ -117,9 +122,9 @@ export default async function HomePage() {
         tiles={[
           { label: "Items in the last run", value: itemsToday, hint: lastRun ? `run of ${lastRun.run_date}` : undefined },
           {
-            label: "Top LMArena score",
-            value: topArena?.score ?? 0,
-            hint: topArena ? topArena.model : "no scores yet",
+            label: featuredBenchmark ? `Top score · ${featuredBenchmark}` : "Top benchmark score",
+            value: topScore?.score ?? 0,
+            hint: topScore ? topScore.model : "no scores yet",
           },
           {
             label: "Disclosed funding this month",
@@ -133,10 +138,12 @@ export default async function HomePage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading">LMArena trend</CardTitle>
+            <CardTitle className="font-heading">
+              {featuredBenchmark ? `${featuredBenchmark} trend` : "Benchmark trend"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <BenchmarkTrend scores={benchmarks.filter((b) => b.benchmark === "lmarena-text")} />
+            <BenchmarkTrend scores={featuredScores} />
           </CardContent>
         </Card>
         <Card>

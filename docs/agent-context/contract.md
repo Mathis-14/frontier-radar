@@ -19,9 +19,9 @@ Verified 2026-07-23 against the live DB + code:
 - **Finance page headline chart** (`ValuationBars`) plots only events with
   `valuation_usd` set — events carrying only `amount_usd` (e.g. a settlement) render in
   the table but leave the chart at "No valuations reported yet."
-- **Home stat tile + trend chart hardcode `benchmark === "lmarena-text"`**
-  (`src/app/(dashboard)/page.tsx`). If the agent never lands lmarena scores, home shows
-  0 / "no scores yet" even when other benchmarks have data.
+- **Home stat tile + trend chart feature the benchmark with the most scores** (dynamic
+  since 2026-07-23, `src/app/(dashboard)/page.tsx`) — no slug is hardcoded anymore; empty
+  only when there are zero benchmark rows.
 - **Trend charts need ≥2 distinct `as_of` dates** per benchmark to draw a line; a single
   morning run yields single-point charts. Only cron accumulation fixes this.
 - **Benchmark `model` strings are chart series keys** — inconsistent names across runs
@@ -30,5 +30,5 @@ Verified 2026-07-23 against the live DB + code:
 - Home "Disclosed funding this month" sums every `amount_usd` in the current month
   regardless of `event_type` — a settlement displays as "funding".
 
-Potential app-side follow-ups (NOT scheduled): chart fallback to `amount_usd`, stop
-hardcoding lmarena on home, model-name normalization at ingest.
+Potential app-side follow-ups (NOT scheduled): finance chart fallback to `amount_usd`,
+model-name normalization at ingest.
