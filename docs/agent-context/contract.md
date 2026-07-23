@@ -24,11 +24,11 @@ Verified 2026-07-23 against the live DB + code:
   only when there are zero benchmark rows.
 - **Trend charts need ≥2 distinct `as_of` dates** per benchmark to draw a line; a single
   morning run yields single-point charts. Only cron accumulation fixes this.
-- **Benchmark `model` strings are chart series keys** — inconsistent names across runs
-  ("GPT-5.6 Luna (max)" vs "GPT-5.6 Luna") fragment series. Upsert conflict key is
-  `(benchmark, model, as_of)`.
+- **Benchmark `model` strings are chart series keys** — normalized since 2026-07-23:
+  `normalizeModelName` (`src/lib/ingest/upsert.ts`) strips config/effort suffixes like
+  "(max)" at ingest AND at read time (legacy rows), collapsing variants to the best score
+  per `(benchmark, model, as_of)` — which stays the upsert conflict key.
 - Home "Disclosed funding this month" sums every `amount_usd` in the current month
   regardless of `event_type` — a settlement displays as "funding".
 
-Potential app-side follow-ups (NOT scheduled): finance chart fallback to `amount_usd`,
-model-name normalization at ingest.
+Potential app-side follow-ups (NOT scheduled): finance chart fallback to `amount_usd`.

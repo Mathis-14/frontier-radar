@@ -16,6 +16,21 @@ export function normalizeUrl(raw: string): string {
   }
 }
 
+/**
+ * Strip effort/config qualifiers leaderboards append to model names
+ * ("GPT-5.6 Sol (max)" → "GPT-5.6 Sol") so one model stays one chart
+ * series across runs. Qualifier list is closed on purpose: parentheses
+ * that carry identity (e.g. "(7B)") must survive.
+ */
+const MODEL_QUALIFIER =
+  /\s*\((?:max|high|xhigh|low|medium|minimal|standard|fast|thinking|extended thinking|with fallback|effort[^)]*)\)$/i;
+
+export function normalizeModelName(raw: string): string {
+  let name = raw.trim();
+  while (MODEL_QUALIFIER.test(name)) name = name.replace(MODEL_QUALIFIER, "").trim();
+  return name;
+}
+
 export type UpsertCounts = Record<string, number>;
 
 export async function upsertPayload(
@@ -87,8 +102,18 @@ export async function upsertPayload(
   counts.model_releases = payload.model_releases.length;
 
   if (payload.benchmarks.length) {
+    // Config variants of one model collapse to a single row (the best score) —
+    // also keeps the upsert legal: Postgres rejects two rows with the same
+    // conflict key in one statement.
+    const bestByKey = new Map<string, (typeof payload.benchmarks)[number]>();
+    for (const b of payload.benchmarks) {
+      const model = normalizeModelName(b.model);
+      const key = `${b.benchmark}::${model}::${b.as_of}`;
+      const cur = bestByKey.get(key);
+      if (!cur || b.score > cur.score) bestByKey.set(key, { ...b, model });
+    }
     const { error } = await db.from("benchmark_scores").upsert(
-      payload.benchmarks.map((b) => ({
+      [...bestByKey.values()].map((b) => ({
         benchmark: b.benchmark,
         model: b.model,
         company_id: cid(b.company),
@@ -99,8 +124,10 @@ export async function upsertPayload(
       { onConflict: "benchmark,model,as_of" }
     );
     if (error) throw error;
+    counts.benchmarks = bestByKey.size;
+  } else {
+    counts.benchmarks = 0;
   }
-  counts.benchmarks = payload.benchmarks.length;
 
   if (payload.finance.length) {
     const { error } = await db.from("finance_events").upsert(
