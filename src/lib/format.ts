@@ -25,6 +25,25 @@ export function splitIntoParagraphs(text: string): string[] {
   return paragraphs;
 }
 
+/**
+ * Split a narrative into a short editorial lead (the takeaway sentence, shown
+ * large) and the remaining paragraphs (hidden behind a "read more" expander —
+ * progressive disclosure keeps the hero scannable). The lead absorbs extra
+ * sentences until it reads as a full thought (~80ch minimum).
+ */
+export function splitLead(text: string): { lead: string; rest: string[] } {
+  const trimmed = text.trim();
+  const sentences = trimmed.split(/(?<=[.!?])\s+(?=["'(A-Z0-9~])/);
+  let lead = sentences[0] ?? "";
+  let i = 1;
+  while (lead.length < 80 && i < sentences.length) {
+    lead += ` ${sentences[i]}`;
+    i += 1;
+  }
+  const remainder = sentences.slice(i).join(" ").trim();
+  return { lead, rest: remainder ? splitIntoParagraphs(remainder) : [] };
+}
+
 export function formatUsd(n: number): string {
   if (n >= 1e12) return `$${(n / 1e12).toFixed(1)}T`;
   if (n >= 1e9) return `$${(n / 1e9).toFixed(n >= 1e10 ? 0 : 1)}B`;

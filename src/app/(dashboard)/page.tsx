@@ -1,6 +1,6 @@
 import { AuroraBackground } from "@/components/kit/aurora-background";
 import { BeamBorder } from "@/components/kit/beam-border";
-import { RevealText } from "@/components/kit/reveal-text";
+import { BriefExpander } from "@/components/kit/brief-expander";
 import { ScrambleText } from "@/components/kit/scramble-text";
 import { TypewriterText } from "@/components/kit/typewriter-text";
 import { BenchmarkTrend } from "@/components/charts/benchmark-trend";
@@ -9,7 +9,7 @@ import { NewsList } from "@/components/sections/news-list";
 import { ReleaseTicker } from "@/components/sections/release-ticker";
 import { StatTiles } from "@/components/sections/stat-tiles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { splitIntoParagraphs } from "@/lib/format";
+import { splitLead } from "@/lib/format";
 import {
   getAgiDaily,
   getBenchmarkScores,
@@ -68,10 +68,8 @@ export default async function HomePage() {
             />
           </div>
           {today ? (
-            <div className="mt-5 max-w-prose space-y-4">
-              {splitIntoParagraphs(today.narrative).map((paragraph, i) => (
-                <RevealText key={i} text={paragraph} />
-              ))}
+            <div className="mt-5">
+              <BriefExpander {...splitLead(today.narrative)} />
             </div>
           ) : (
             <p className="mt-5 text-muted-foreground">
