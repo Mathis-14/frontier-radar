@@ -1,8 +1,40 @@
 # Frontier Radar
 
-A personal AI-industry intelligence dashboard. Every morning a **Claude Managed Agent** (see `../agent/`) browses the web for news, model releases, benchmarks, community sentiment and finance events across the tracked AI companies, and POSTs one structured payload to this app's `/api/ingest`. The dashboard renders it: **Road to AGI** daily synthesis, per-company feeds, benchmark comparisons, valuations, and a networking mini-CRM.
+A personal AI-industry intelligence dashboard, fed entirely by **Claude Managed Agents**.
+Every morning a multi-agent team browses the web and delivers one structured JSON payload
+to this app; the dashboard turns it into a morning brief.
+
+**Pages**: *Road to AGI* (daily synthesis + capability gauge + movers) · *Companies*
+(per-company feeds) · *Benchmarks* (score leaderboard that becomes trend lines as days
+accumulate) · *Finance* (valuations + disclosed amounts, every figure linked to its
+source) · *Networking* (a mini-CRM seeded by people who surfaced in the news).
+
+## How the data gets here
+
+```
+07:00 cron ─ coordinator (Claude Opus 4.8, Managed Agents "multiagent" feature)
+              ├─ radar-news        (Claude Sonnet 4.6) news · releases · contacts
+              ├─ radar-benchmarks  (Claude Sonnet 4.6) fixed slugs, per-source recipes
+              ├─ radar-finance     (Claude Sonnet 4.6) rounds · valuations · capex
+              └─ radar-community   (Claude Sonnet 4.6) HN · Reddit · X sentiment
+              → merges, dedups vs its memory store, writes the daily synthesis,
+                POSTs one schema-v1 payload → /api/ingest → Supabase → this UI
+```
+
+The four specialists run in parallel with isolated contexts and hand off through shared
+session files; the coordinator is the only thread that touches memory or the network
+credential (host-pinned in a Managed Agents vault — the agent can use the ingest token
+without ever being able to read it).
+
+## Stack
+
+Next.js 16 (App Router, RSC) · Tailwind v4 · shadcn/Base UI + vendored motion kit
+(see `docs/UI-KIT.md`) · Recharts · Supabase (Postgres + auth, RLS, signups disabled) ·
+Vercel. Agent side: Anthropic Managed Agents API (agents, environments, memory stores,
+vaults, scheduled deployments) — runbook in `../agent/LAUNCH.md` (local, not in this repo).
 
 Runs in **demo mode** (fixture data, no auth) until Supabase env vars are set.
+Access to the live deployment is by credential only — shared privately, never in this repo.
 
 ## Setup
 
@@ -29,6 +61,7 @@ Runs in **demo mode** (fixture data, no auth) until Supabase env vars are set.
 
 - `src/lib/ingest/schema.ts` — the zod contract with the agent (single source of truth)
 - `src/app/api/ingest/route.ts` — bearer auth, validation, idempotent upserts
-- `src/components/originkit/` — animated component slots (swap for genuine OriginKit source via its MCP; each file names its target component)
-- `src/lib/queries.ts` — all reads; falls back to `fixtures/sample-payload.json` in demo mode
-- `../agent/LAUNCH.md` — the managed-agent launch runbook (test session → scheduled deployment)
+- `src/lib/queries.ts` — all reads (+ model-name normalization); demo-mode fixture fallback
+- `src/components/kit/` + `src/components/charts/` — vendored motion/UI kit and charts (`docs/UI-KIT.md`)
+- `docs/agent-context/` — working memory for coding agents picking the project up cold
+- `../agent/LAUNCH.md` — the managed-agent launch runbook (specialists → coordinator → vault → cron)
