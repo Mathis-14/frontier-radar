@@ -29,6 +29,7 @@ export default async function FinancePage() {
         <h1 className="font-heading text-2xl font-semibold tracking-tight">Finance</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Reported valuations and funding rounds — every figure links to its source.
+          Non-USD figures are converted at the rate of the report date.
         </p>
       </div>
 

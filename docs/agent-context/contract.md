@@ -30,5 +30,11 @@ Verified 2026-07-23 against the live DB + code:
   per `(benchmark, model, as_of)` — which stays the upsert conflict key.
 - Home "Disclosed funding this month" sums every `amount_usd` in the current month
   regardless of `event_type` — a settlement displays as "funding".
+- **`round_name` doubles as the event label** for non-round finance events ("copyright
+  settlement", "Samsung round talks (€20B)") — the Events table renders it in the badge.
+  Agent-side rule lives in radar-finance (≥v3) with the currency-precision rule (convert
+  to USD, round to source precision, original figure in the label).
+- **Finance upserts `ignoreDuplicates`** on `(company_id,event_type,announced_on)` —
+  a re-POST can never correct an existing row; corrections need a manual DB update.
 
 Potential app-side follow-ups (NOT scheduled): finance chart fallback to `amount_usd`.
