@@ -11,14 +11,19 @@ cat ../agent/IDS.env   # AGENT_ID (coordinator, claude-opus-4-8), AGENT_VERSION 
                        # ENV_ID, MEMSTORE_ID, SESSION_ID, REGRESSION_SESSION_ID
 ```
 
-As of 2026-07-23 the agent is a **multiagent coordinator (v3)** with the 4 specialists pinned
-at v1 (definitions in `../agent/subagents/*.json`; see `multiagent-plan.md`). There is still
-**no VAULT_ID and no DEPLOYMENT_ID** — all dashboard data came from the single manual test
-session; the 07:00 Europe/Paris cron does not exist yet.
+The agent is a **multiagent coordinator** with 4 specialists (definitions in
+`../agent/subagents/*.json`; see `multiagent-plan.md`). Versions move often — NEVER trust a
+written snapshot; read the last `AGENT_VERSION`/`RADAR_*_VERSION` lines of IDS.env (source
+is last-wins) or GET the agent. There is still **no VAULT_ID and no DEPLOYMENT_ID** — the
+07:00 Europe/Paris cron does not exist yet; dashboard data so far was ingested manually
+(runs `2026-07-23-e54be149` + `2026-07-23-finance-baseline` via localhost POST).
 
 Memory store files: `/config/companies.md` (tracked list — edit to change coverage, no
-redeploy), `/reported/{urls,models,finance}.md` (21-day dedup), `/benchmarks/latest.md`.
+redeploy), `/reported/{urls,models,finance}.md` (21-day dedup), `/benchmarks/latest.md`,
+`/finance/valuations.md` (last valuation per company; coordinator creates on first run).
 List-memories returns no content — read `content_size_bytes` or retrieve individually.
+**Dedup lists were NOT updated for the manually-ingested 2026-07-23 payloads** (write was
+permission-blocked) — the first real run may re-report a few July-23 items once.
 
 ## API recipes
 

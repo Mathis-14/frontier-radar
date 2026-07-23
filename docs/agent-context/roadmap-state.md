@@ -1,52 +1,52 @@
-# Roadmap & state — snapshot 2026-07-23 (verify before trusting)
+# Roadmap & state — snapshot 2026-07-23 evening (verify before trusting)
 
 ## Shipped
 
-- **Multi-agent CMA rebuild built + regression-passed 2026-07-23** (branch
-  `feat/multiagent-cma`): coordinator updated to v3 (`claude-opus-4-8`, roster of 4) +
-  specialists radar-{news,benchmarks,finance,community} created (`claude-sonnet-4-6`, v1,
-  definitions in `../agent/subagents/`). LAUNCH.md gained steps 1a/1b (specialists →
-  coordinator, pin rule) and 5b (files-only regression gate, no vault). Regression run:
-  grader satisfied 6/6, 25 benchmark scores (vs 6 single-agent), finance valuation_report
-  with `valuation_usd`, memory untouched — session id + details in `../agent/evals/case-02/`.
-- **PR #1 merged 2026-07-23** (`b36beb2`): UI rebuild phases 0–1 — kit scaffolding
-  (vendored MagicUI ×8 + ReactBits ×2 + OriginKit move, convention in `docs/UI-KIT.md`),
-  sidebar/home animations, sidebar-overflow fix (`min-w-0` on SidebarInset), hero
-  typography (65ch/16px + `splitLead`), hero read-more expander (`BriefExpander`),
-  real brand marks (`CompanyLogo` + `public/logos/*.svg`).
-- First real CMA run 2026-07-22: grader satisfied, payload ingested (session recorded as
-  `../agent/evals/case-01/` regression baseline). Fixture rows purged from Supabase.
-- Security audit passed pre-deploy (no secrets in tree/history, RLS authenticated-only,
-  middleware fails closed in prod).
+- **Finance audit + hardening 2026-07-23 (PM)**: founder flagged wrong finance data; a
+  transcript audit confirmed it (settlement was a Sept-2025 story re-dated; Mistral €20B
+  recorded as $22.8B off-page; AMD-$5B found by community thread but never promoted to
+  finance; specialist searched 5/8 companies). Fixes: radar-finance →v4 (fetch-verify the
+  cited page, per-company sweep, currency rounded to source precision, `round_name` label
+  on every event, `/finance/valuations.md` baseline), radar-benchmarks →v3 (bare canonical
+  model names, one row per model), coordinator →v8 (cross-domain money sweep, maintains
+  valuations.md). A dedicated finance baseline session produced 6 verified events
+  (Anthropic $965B, OpenAI $852B, xAI $230B, DeepSeek $50B, Mistral $23B talks, AMD $5B)
+  ingested as run `2026-07-23-finance-baseline`.
+- **PR #3 (branch `feat/benchmark-model-naming`, OPEN)**: model-name normalization at
+  ingest+read, benchmark leaderboard mode (bars until any series has 2 dates), restored
+  lmarena removal (PR #2 was merged before its second commit — cherry-picked), full-width
+  single-benchmark card, finance two-chart layout + transparent hover cursor, 12-item
+  scrollable home news list, external-reader README, docs updates.
+- **Multi-agent CMA rebuild + regression pass 2026-07-23 (AM)**, merged as PR #2: 4
+  specialists (`claude-sonnet-4-6`) + coordinator, LAUNCH.md steps 1a/1b/5b, baseline
+  `../agent/evals/case-02/`. July-23 multiagent payload manually ingested
+  (run `2026-07-23-e54be149`: 25 benchmark scores, 42 items).
+- **PR #1 merged 2026-07-23** (`b36beb2`): UI rebuild phases 0–1 (kit, hero, brand marks).
+- First real CMA run 2026-07-22 (`../agent/evals/case-01/`); security audit passed.
 
-## Active workstream — none (multi-agent rebuild done, go-live blocked below)
+## Active workstream — land PR #3, then go-live
 
-The multi-agent rebuild (spec `multiagent-plan.md`) is built and regression-passed — see
-Shipped. Next up after go-live: resume UI phases 2–5 or the app-side chart fallbacks.
+Founder merges PR #3 → production picks up all UI/data fixes. Then go-live (below).
+After that: UI phases 2–5 (paused on Assumption Ledger answers, see `docs/UI-REBUILD-PLAN.md`).
 
-## Paused workstream — UI phases 2–5
+## BLOCKED — waiting on founder (each is a one-word go)
 
-`docs/UI-REBUILD-PLAN.md` phases 2–4 (companies/benchmarks/finance/networking pages) +
-phase 5 polish wait on founder answers to the plan's Assumption Ledger items 2–5 and the
-intensity dial (current: premium-subtle, cream theme + Fraunces). OriginKit MCP was not
-connected recently — genuine hero-headline/brand-title text effects still pending
-(fallback applied: structure now, effects later; re-check the 10 fetch/day budget).
+1. **Production domain** (`frontier-radar-*-mathis-14s-projects.vercel.app`-shaped) →
+   unlocks LAUNCH.md step 4 (vault) → 6 (cron 0 7 * * * Europe/Paris) → 7 (smoke run).
+   Founder already did the Vercel Deployment Protection change + INGEST_TOKEN rotation
+   (new token in `.env.local` + Vercel + staged in `../agent/IDS.env`).
+2. **"update the agent memory"** — dedup lists NOT synced for the two manual 2026-07-23
+   ingests (write permission-blocked); first cron run may re-report a few items once.
+   Prepared files: scratchpad new-{urls,finance,benchmarks}.md (regenerate if lost).
+3. **"fix the two finance rows"** — legacy rows (mistral 07-22 $22.8B unlabeled;
+   anthropic 07-20 unlabeled) need a direct DB PATCH; ingest can't correct existing rows
+   (`ignoreDuplicates`). Cosmetic only.
+4. **"create the demo account"** — demo@frontier-radar.app for the Anthropic contact
+   (README ready; credentials go to LOGIN-local.txt, never the repo).
 
-## BLOCKED — agent go-live (human-only steps, in order)
+## Data state (after the two manual ingests)
 
-1. Vercel → Settings → Deployment Protection → Vercel Authentication → "Only Preview
-   Deployments" (SSO currently intercepts the agent's POSTs). The real production domain
-   is `frontier-radar-*-mathis-14s-projects.vercel.app`-shaped — `frontier-radar.vercel.app`
-   belongs to a stranger.
-2. Rotate `INGEST_TOKEN` (`openssl rand -hex 32` → `.env.local` + Vercel env).
-3. `../agent/LAUNCH.md` step 4 (vault) → step 6 (deployment, cron 0 7 * * * Europe/Paris)
-   → step 7 (manual smoke run). Specialist creation and the coordinator update (steps
-   1a/1b) are already DONE (2026-07-23) — only 4/6/7 remain once 1–2 above are handled.
-
-## Known data-quality state (from the 2026-07-23 audit)
-
-One run of data total. Benchmarks: only `aa-intelligence-index` (6 scores, one source,
-one date) — home page's hardcoded `lmarena-text` tile/chart therefore shows empty.
-Finance: one event (settlement, `other`, amount only) — valuations chart empty because no
-`valuation_usd` exists yet. Root causes and fixes are folded into `multiagent-plan.md`;
-app-side chart fallbacks are a separate, not-yet-scheduled follow-up.
+Benchmarks: 31 rows / 26 normalized models on `aa-intelligence-index`, two as_of dates but
+zero cross-date model overlap → charts show leaderboard bars; lines start when the cron
+produces day 2 with stable names. Finance: 8 events, full valuation landscape. Trend lines
+and "Disclosed funding this month" build up from cron accumulation.

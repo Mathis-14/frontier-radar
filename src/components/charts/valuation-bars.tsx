@@ -44,6 +44,7 @@ function UsdBars({ data, emptyLabel }: { data: BarDatum[]; emptyLabel: string })
         />
         <Tooltip
           formatter={(v) => formatUsd(Number(v))}
+          cursor={{ fill: "transparent" }}
           contentStyle={{
             background: "var(--card)",
             border: "1px solid var(--border)",
