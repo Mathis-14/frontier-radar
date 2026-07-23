@@ -27,7 +27,7 @@ export default async function HomePage() {
     getAgiDaily(),
     getModelReleases(),
     getBenchmarkScores(),
-    getNews({ limit: 6 }),
+    getNews({ limit: 12 }),
     getCompanies(),
     getFinanceEvents(),
     getIngestRuns(1),
@@ -150,7 +150,7 @@ export default async function HomePage() {
           <CardHeader>
             <CardTitle className="font-heading">Latest news</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="max-h-[32rem] overflow-y-auto">
             <NewsList items={news} />
           </CardContent>
         </Card>
