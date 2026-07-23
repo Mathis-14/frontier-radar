@@ -107,12 +107,12 @@ export default async function BenchmarksPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {benchmarks.map((b) => (
-          <Card key={b}>
+          <Card key={b} className={benchmarks.length === 1 ? "lg:col-span-2" : undefined}>
             <CardHeader>
               <CardTitle className="font-heading">{b}</CardTitle>
             </CardHeader>
             <CardContent>
-              <BenchmarkTrend scores={scores.filter((s) => s.benchmark === b)} />
+              <BenchmarkTrend scores={scores.filter((s) => s.benchmark === b)} maxBars={12} />
             </CardContent>
           </Card>
         ))}

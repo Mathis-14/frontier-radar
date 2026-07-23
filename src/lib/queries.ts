@@ -1,4 +1,5 @@
 import "server-only";
+import { normalizeModelName } from "./ingest/upsert";
 import { createSupabaseServerClient, isSupabaseConfigured } from "./supabase/server";
 import {
   DEMO_AGI,
@@ -84,7 +85,17 @@ export async function getBenchmarkScores(): Promise<BenchmarkScoreRow[]> {
     .select(`id, benchmark, model, score, as_of, source_url, ${COMPANY_JOIN}`)
     .order("as_of", { ascending: false })
     .limit(500);
-  return (data as unknown as BenchmarkScoreRow[]) ?? [];
+  const rows = (data as unknown as BenchmarkScoreRow[]) ?? [];
+  // Rows ingested before name normalization still carry config suffixes —
+  // collapse them at read time so old and new runs share series keys.
+  const best = new Map<string, BenchmarkScoreRow>();
+  for (const r of rows) {
+    const model = normalizeModelName(r.model);
+    const key = `${r.benchmark}::${model}::${r.as_of}`;
+    const cur = best.get(key);
+    if (!cur || r.score > cur.score) best.set(key, { ...r, model });
+  }
+  return [...best.values()];
 }
 
 export async function getFinanceEvents(): Promise<FinanceEventRow[]> {

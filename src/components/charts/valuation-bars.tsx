@@ -17,30 +17,12 @@ import type { FinanceEventRow } from "@/lib/types";
 const INK_MUTED = "var(--muted-foreground)";
 const GRID = "var(--border)";
 
-/** Horizontal bars: latest reported valuation per company (magnitude → bar form). */
-export function ValuationBars({ events }: { events: FinanceEventRow[] }) {
-  const latest = new Map<string, { name: string; color: string; valuation: number }>();
-  for (const e of events) {
-    if (!e.valuation_usd || !e.company) continue;
-    const cur = latest.get(e.company.slug);
-    if (!cur) {
-      latest.set(e.company.slug, {
-        name: e.company.name,
-        color: e.company.color ?? "var(--chart-1)",
-        valuation: e.valuation_usd,
-      });
-    }
-  }
-  const data = [...latest.values()].sort((a, b) => b.valuation - a.valuation);
+type BarDatum = { name: string; color: string; value: number };
 
+function UsdBars({ data, emptyLabel }: { data: BarDatum[]; emptyLabel: string }) {
   if (!data.length) {
-    return (
-      <p className="py-10 text-center text-sm text-muted-foreground">
-        No valuations reported yet.
-      </p>
-    );
+    return <p className="py-10 text-center text-sm text-muted-foreground">{emptyLabel}</p>;
   }
-
   return (
     <ResponsiveContainer width="100%" height={Math.max(160, data.length * 52)}>
       <BarChart data={data} layout="vertical" margin={{ top: 4, right: 56, bottom: 0, left: 8 }}>
@@ -70,18 +52,49 @@ export function ValuationBars({ events }: { events: FinanceEventRow[] }) {
             fontSize: 12,
           }}
         />
-        <Bar dataKey="valuation" barSize={18} radius={[0, 4, 4, 0]}>
+        <Bar dataKey="value" barSize={18} radius={[0, 4, 4, 0]}>
           {data.map((d) => (
             <Cell key={d.name} fill={d.color} />
           ))}
           <LabelList
-            dataKey="valuation"
+            dataKey="value"
             position="right"
-            formatter={(v) => (typeof v === "number" ? formatUsd(v) : v)}
+            formatter={(v: unknown) => (typeof v === "number" ? formatUsd(v) : String(v))}
             style={{ fill: "var(--foreground)", fontSize: 12 }}
           />
         </Bar>
       </BarChart>
     </ResponsiveContainer>
   );
+}
+
+/** Horizontal bars: latest reported valuation per company (magnitude → bar form). */
+export function ValuationBars({ events }: { events: FinanceEventRow[] }) {
+  const latest = new Map<string, BarDatum>();
+  for (const e of events) {
+    if (!e.valuation_usd || !e.company) continue;
+    if (!latest.has(e.company.slug)) {
+      latest.set(e.company.slug, {
+        name: e.company.name,
+        color: e.company.color ?? "var(--chart-1)",
+        value: e.valuation_usd,
+      });
+    }
+  }
+  const data = [...latest.values()].sort((a, b) => b.value - a.value);
+  return <UsdBars data={data} emptyLabel="No valuations reported yet." />;
+}
+
+/** Horizontal bars: recent disclosed amounts (rounds, settlements, capex) per event. */
+export function AmountBars({ events, max = 8 }: { events: FinanceEventRow[]; max?: number }) {
+  const data = events
+    .filter((e) => e.amount_usd && e.company)
+    .slice(0, max)
+    .map((e) => ({
+      name: `${e.company!.name}${e.round_name ? ` · ${e.round_name}` : ""}`,
+      color: e.company!.color ?? "var(--chart-1)",
+      value: e.amount_usd!,
+    }))
+    .sort((a, b) => b.value - a.value);
+  return <UsdBars data={data} emptyLabel="No disclosed amounts yet." />;
 }

@@ -1,4 +1,4 @@
-import { ValuationBars } from "@/components/charts/valuation-bars";
+import { AmountBars, ValuationBars } from "@/components/charts/valuation-bars";
 import { formatUsd } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,14 +32,24 @@ export default async function FinancePage() {
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-heading">Latest reported valuations</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ValuationBars events={events} />
-        </CardContent>
-      </Card>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-heading">Latest reported valuations</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ValuationBars events={events} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-heading">Disclosed amounts</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <AmountBars events={events} />
+          </CardContent>
+        </Card>
+      </div>
 
       <Card>
         <CardHeader>
