@@ -38,6 +38,12 @@ src/components/kit/
    cross the server→client boundary (see the `StatTile.format` hint precedent).
 7. **Vendor animation keyframes** live in `src/app/globals.css` under the
    "Kit vendor animations" `@theme` block — copied verbatim from the upstream registry.
-8. **Motion intensity: premium-subtle.** Spotlight/tilt on hover; beam/shine on at
+8. **Brand marks are real, never invented.** Company logos live in
+   `public/logos/<slug>.svg` as monochrome single-path SVGs — source from
+   simple-icons (CC0) first, Wikimedia Commons for gaps (check the file's
+   license). `CompanyLogo` tints them white on the company color via CSS mask;
+   slugs without a vendored mark fall back to the letter tile (add the SVG and
+   list the slug in `company-logo.tsx`).
+9. **Motion intensity: premium-subtle.** Spotlight/tilt on hover; beam/shine on at
    most 2 hero cards; no permanent heavy motion. Everything animated must degrade
    under `prefers-reduced-motion`.
