@@ -1,7 +1,7 @@
-import { AuroraBackground } from "@/components/originkit/aurora-background";
-import { RevealText } from "@/components/originkit/reveal-text";
-import { ScrambleText } from "@/components/originkit/scramble-text";
-import { TypewriterText } from "@/components/originkit/typewriter-text";
+import { AuroraBackground } from "@/components/kit/aurora-background";
+import { RevealText } from "@/components/kit/reveal-text";
+import { ScrambleText } from "@/components/kit/scramble-text";
+import { TypewriterText } from "@/components/kit/typewriter-text";
 import { BenchmarkTrend } from "@/components/charts/benchmark-trend";
 import { GaugeChip } from "@/components/sections/gauge-chip";
 import { NewsList } from "@/components/sections/news-list";

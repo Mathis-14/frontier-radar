@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SpotlightCard } from "@/components/originkit/spotlight-card";
+import { SpotlightCard } from "@/components/kit/spotlight-card";
 import { getCompanies, getModelReleases, getNews } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";

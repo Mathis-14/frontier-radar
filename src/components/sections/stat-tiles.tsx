@@ -1,6 +1,6 @@
 "use client";
 
-import { NumberTicker } from "@/components/originkit/number-ticker";
+import { NumberTicker } from "@/components/kit/number-ticker";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatUsd } from "@/lib/format";
 

@@ -4,7 +4,7 @@
 // fetched via the OriginKit MCP). Wrapped to expose onClick (the vendor component
 // is link-based); preventDefault stops the empty-href navigation.
 
-import MagneticButton from "./vendor/magnetic-hover-button/magnetic-hover-button";
+import MagneticButton from "./vendor/originkit/magnetic-hover-button/magnetic-hover-button";
 
 export function MagneticActionButton({
   label,

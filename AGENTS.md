@@ -7,3 +7,5 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Project context
 
 Before working on anything here, read `docs/CONTEXT.md` — project map, the agent↔app contract, current state, blocked next steps, and gotchas. Update its State section when you ship.
+
+UI components are sourced and vendored per `docs/UI-KIT.md` (kit layout, vendor header contract, adapters-only imports).

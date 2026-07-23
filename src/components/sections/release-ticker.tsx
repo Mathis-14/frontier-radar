@@ -1,4 +1,4 @@
-import { Marquee } from "@/components/originkit/marquee";
+import { Marquee } from "@/components/kit/marquee";
 import { Badge } from "@/components/ui/badge";
 import type { ModelReleaseRow } from "@/lib/types";
 

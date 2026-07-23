@@ -3,7 +3,7 @@
 // OriginKit "Type Writer" (genuine source: vendor/typewriter/, fetched via the
 // OriginKit MCP). Adapter with the app's cream palette.
 
-import Typewriter from "./vendor/typewriter/typewriter";
+import Typewriter from "./vendor/originkit/typewriter/typewriter";
 
 export function TypewriterText({ texts }: { texts: string[] }) {
   return (

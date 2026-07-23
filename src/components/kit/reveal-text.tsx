@@ -3,7 +3,7 @@
 // OriginKit "Scroll Text Reveal" (genuine source: vendor/scroll-text-reveal/,
 // fetched via the OriginKit MCP). Line-mask reveal for the daily narrative.
 
-import LineMaskSplit from "./vendor/scroll-text-reveal/scroll-text-reveal";
+import LineMaskSplit from "./vendor/originkit/scroll-text-reveal/scroll-text-reveal";
 
 export function RevealText({ text }: { text: string }) {
   return (

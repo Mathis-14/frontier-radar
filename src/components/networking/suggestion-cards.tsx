@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { X } from "lucide-react";
-import { MagneticActionButton } from "@/components/originkit/magnetic-button";
-import { SpotlightCard } from "@/components/originkit/spotlight-card";
+import { MagneticActionButton } from "@/components/kit/magnetic-button";
+import { SpotlightCard } from "@/components/kit/spotlight-card";
 import { Button } from "@/components/ui/button";
 import type { SuggestedContactRow } from "@/lib/types";
 

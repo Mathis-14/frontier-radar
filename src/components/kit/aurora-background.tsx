@@ -3,7 +3,7 @@
 // Soft cream aurora blobs + OriginKit "Stardust" particle field (genuine source:
 // vendor/stardust/, fetched via the OriginKit MCP; 8-digit hex alpha = transparent bg).
 
-import Sparkles from "./vendor/stardust/stardust";
+import Sparkles from "./vendor/originkit/stardust/stardust";
 import { cn } from "@/lib/utils";
 
 export function AuroraBackground({
