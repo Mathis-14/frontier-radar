@@ -1,16 +1,15 @@
 # Workflow — rules of engagement
 
-## Repo layout & the twin-checkout trap
+## Repo layout
 
-- **This repo** (`app/` on disk, public on GitHub `Mathis-14/frontier-radar`) — the dashboard.
-- `../agent/` — the CMA build kit (agent.json, outcome.md, LAUNCH.md, IDS.env, memory-seed,
-  evals). On local disk next to `app/`; treat as local-only.
-- **TRAP:** the outer folder (the parent directory of this `app/` checkout) is a SECOND,
-  stale clone of the SAME GitHub remote, and the shell cwd silently resets to it between
-  commands.
-  A git command run there once pushed a stale branch to the shared remote.
-  **Never run git from the outer clone → prefix every git/npm command with an explicit
-  `cd .../frontier-radar/app &&` and sanity-check `git rev-parse HEAD` before any push.**
+- **This repo** (`/Users/mathis/Documents/dev/frontier-radar`, public on GitHub as
+  `Mathis-14/frontier-radar`) is the canonical dashboard checkout.
+- `./agent/` is the local-only CMA build kit (agent.json, outcome.md, LAUNCH.md,
+  IDS.env, memory-seed, evals); it is ignored by Git.
+- A legacy nested checkout at `./app/` was archived on 2026-07-27 after its tracked
+  tree and local branches were verified against this repository and the shared remote.
+- Run Git and npm from the repository root, and sanity-check `git rev-parse
+  --show-toplevel` before any push.
 
 ## Commit / push / PR
 
@@ -24,7 +23,7 @@
 ## Security nevers (repo is PUBLIC)
 
 - Never commit or quote credentials. Local secrets: `.env.local`, `LOGIN-local.txt`
-  (dashboard logins — read for Playwright, never echo), `../agent/.env`, `../agent/IDS.env`.
+  (dashboard logins — read for Playwright, never echo), `./agent/.env`, `./agent/IDS.env`.
 - Login form maps bare usernames → `<name>@frontier-radar.app`; two Supabase users exist,
   signups disabled.
 - Rotate `INGEST_TOKEN` before agent go-live (the current one touched a session transcript).
@@ -32,7 +31,7 @@
 ## Build & verify loop
 
 ```bash
-cd .../frontier-radar/app
+cd .../frontier-radar
 npm run lint && npm run build
 lsof -ti :3111 | xargs kill; npm run start -- -p 3111   # reference prod server
 ```

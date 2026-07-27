@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // The parent directory is a stale clone with its own lockfile; keep Turbopack
-  // rooted in this application checkout.
+  // Keep Turbopack rooted in the canonical application checkout.
   turbopack: {
     root: process.cwd(),
   },
