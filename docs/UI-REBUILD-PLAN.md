@@ -4,7 +4,7 @@
 
 The founder felt the first pass didn't honor his ask for OriginKit components, and wants the "boxes" (cards/tiles/panels) and the sidebar rebuilt with animated components, drawing on OriginKit plus new idea sources (magicui.design, reactbits.dev, 21st.dev, ui.shadcn.com). Verified via OriginKit's own MCP: **OriginKit ships only effects** (~46 components — text ×24, image reveals ×10, cursors ×7, ambient ×5, particle backgrounds, effect buttons) — **no structural cards, sidebars, bento grids, or nav**. So the honest way to maximize OriginKit is the hybrid: structure from ReactBits + MagicUI (free copy-paste), genuine OriginKit effects layered on top. Also requested: improve "the way we do things" → a documented component-sourcing convention.
 
-App: `/Users/mathis/Documents/dev/frontier-radar/app` — Next.js 16 App Router, Tailwind v4 (CSS-only config), shadcn **Base UI flavor** (`render` prop, never `asChild`), Recharts, cream/terracotta theme (Fraunces + Inter), npm + Vercel.
+App: `/Users/mathis/Documents/dev/frontier-radar` — Next.js 16 App Router, Tailwind v4 (CSS-only config), shadcn **Base UI flavor** (`render` prop, never `asChild`), Recharts, cream/terracotta theme (Fraunces + Inter), npm + Vercel.
 
 ## Assumption Ledger
 

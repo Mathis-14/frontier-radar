@@ -8,7 +8,7 @@ This folder is the session memory for any agent (Claude/Codex) picking the proje
 
 | File | What it is / when to read |
 | --- | --- |
-| `workflow.md` | Rules of engagement: repo layout + twin-checkout trap, commit/push rules, security nevers, build & verify loop. Read before any work. |
+| `workflow.md` | Rules of engagement: canonical repo layout, commit/push rules, security nevers, build & verify loop. Read before any work. |
 | `roadmap-state.md` | Dated snapshot: shipped log, active workstream, blocked go-live steps. Read second. |
 | `multiagent-plan.md` | APPROVED next build: coordinator + 4 Sonnet 4.6 specialists. Read before touching `../agent/`. |
 | `contract.md` | The agent↔app ingest contract + dashboard data-shape truths (what each page needs to not look empty). |
