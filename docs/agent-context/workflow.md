@@ -9,7 +9,7 @@
   stale clone of the SAME GitHub remote, and the shell cwd silently resets to it between
   commands.
   A git command run there once pushed a stale branch to the shared remote.
-  **Never run git from the outer clone → prefix every git/pnpm command with an explicit
+  **Never run git from the outer clone → prefix every git/npm command with an explicit
   `cd .../frontier-radar/app &&` and sanity-check `git rev-parse HEAD` before any push.**
 
 ## Commit / push / PR
@@ -18,8 +18,8 @@
   straight to main only when the founder says so in-session.
 - End commit messages with the Claude co-author line; PR bodies end with the
   Claude Code attribution line.
-- Never edit `package.json` without `pnpm install --lockfile-only` — Vercel builds with
-  `--frozen-lockfile` and fails on drift.
+- Never edit `package.json` without `npm install --package-lock-only` — Vercel uses the
+  committed npm lockfile and fails on drift.
 
 ## Security nevers (repo is PUBLIC)
 
@@ -33,8 +33,8 @@
 
 ```bash
 cd .../frontier-radar/app
-pnpm lint && pnpm build
-lsof -ti :3111 | xargs kill; pnpm start -p 3111   # reference prod server
+npm run lint && npm run build
+lsof -ti :3111 | xargs kill; npm run start -- -p 3111   # reference prod server
 ```
 
 - Never trust env changes without rebuilding — `NEXT_PUBLIC_*` inlines at build time, and
@@ -44,7 +44,7 @@ lsof -ti :3111 | xargs kill; pnpm start -p 3111   # reference prod server
   animations do NOT fire in fullPage stitched captures — scroll for real before calling
   a zero-value ticker a bug.
 - `./scripts/post-fixture.sh http://localhost:3000` tests ingest (200 → deduped:true → 401);
-  `pnpm seed` loads the fixture through the real ingest path.
+  `npm run seed` loads the fixture through the real ingest path.
 
 ## Misc gotchas (never → do instead)
 

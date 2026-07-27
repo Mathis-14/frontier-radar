@@ -4,7 +4,7 @@
 
 The founder felt the first pass didn't honor his ask for OriginKit components, and wants the "boxes" (cards/tiles/panels) and the sidebar rebuilt with animated components, drawing on OriginKit plus new idea sources (magicui.design, reactbits.dev, 21st.dev, ui.shadcn.com). Verified via OriginKit's own MCP: **OriginKit ships only effects** (~46 components — text ×24, image reveals ×10, cursors ×7, ambient ×5, particle backgrounds, effect buttons) — **no structural cards, sidebars, bento grids, or nav**. So the honest way to maximize OriginKit is the hybrid: structure from ReactBits + MagicUI (free copy-paste), genuine OriginKit effects layered on top. Also requested: improve "the way we do things" → a documented component-sourcing convention.
 
-App: `/Users/mathis/Documents/dev/frontier-radar/app` — Next.js 16 App Router, Tailwind v4 (CSS-only config), shadcn **Base UI flavor** (`render` prop, never `asChild`), Recharts, cream/terracotta theme (Fraunces + Inter), pnpm + Vercel `--frozen-lockfile`.
+App: `/Users/mathis/Documents/dev/frontier-radar/app` — Next.js 16 App Router, Tailwind v4 (CSS-only config), shadcn **Base UI flavor** (`render` prop, never `asChild`), Recharts, cream/terracotta theme (Fraunces + Inter), npm + Vercel.
 
 ## Assumption Ledger
 
@@ -16,7 +16,7 @@ App: `/Users/mathis/Documents/dev/frontier-radar/app` — Next.js 16 App Router,
 | 4 | Intensity = premium-subtle (spotlight/tilt hover; beam/shine on max 2 hero cards; no permanent heavy motion) | AskUserQuestion (no answer — recommended option) | ASSUMED | "animé assumé" → swap in Border Glow/Electric Border + gooey nav at same slots |
 | 5 | Cream theme + Fraunces + shadcn Base UI skeleton (forms/dialogs/tables) stay | Founder said "correct and iterate until UI clean" about this theme; never asked to change it | ASSUMED | retheme is a separate pass; kit consumes CSS vars so it survives |
 | 6 | OriginKit budget: 10 get_component/day, **~3 left today** (7 used 2026-07-22); list/search free | github README + today's MCP calls | CONFIRMED (evidence) | if fetches fail → build structure today, effects tomorrow |
-| 7 | Zero new npm packages: `framer-motion@12` + `gsap@3.15` already installed (used by vendored OriginKit files) | package.json read by Plan agent | CONFIRMED (evidence) | escape hatch: one deliberate `pnpm add` + lockfile committed together |
+| 7 | Zero new npm packages: `framer-motion@12` + `gsap@3.15` already installed (used by vendored OriginKit files) | package.json read by Plan agent | CONFIRMED (evidence) | escape hatch: one deliberate `npm install` + lockfile committed together |
 | 8 | Charts stay Recharts with the validated palette (dataviz rules) | prior session decision, committed | CONFIRMED | — |
 
 ## 1. Component mapping (current → target)
@@ -68,20 +68,20 @@ Tomorrow: image-reveal for company [slug] headers, second text effect for sectio
 
 ## 4. Migration order
 
-- **Phase 0 — kit scaffolding** (no visual change): create `kit/`, `git mv` originkit vendor files, cut over imports, vendor MagicUI/ReactBits sources, write `docs/UI-KIT.md`. Gate: `pnpm build` green.
+- **Phase 0 — kit scaffolding** (no visual change): create `kit/`, `git mv` originkit vendor files, cut over imports, vendor MagicUI/ReactBits sources, write `docs/UI-KIT.md`. Gate: `npm run build` green.
 - **Phase 1 — sidebar + home**: nav pill, radar-sweep brand, dot pattern, hero border-beam, OriginKit fetches, marquee + ticker swaps, news stagger.
-- **📸 CHECKPOINT** — `pnpm build && pnpm start -p 3111`, screenshots to the founder; intensity dial adjusted here before propagating.
+- **📸 CHECKPOINT** — `npm run build && npm run start -- -p 3111`, screenshots to the founder; intensity dial adjusted here before propagating.
 - **Phase 2 — companies + [slug]** · **Phase 3 — benchmarks + finance** · **Phase 4 — networking** (per mapping above).
 - **Phase 5 — polish**: `prefers-reduced-motion` audit (marquee/beam/sweep pause or degrade), dark-mode pass, delete dead stand-ins, update `docs/agent-context/roadmap-state.md`, commit + push → Vercel.
 
 ## 5. Verification
 
-1. `pnpm lint && pnpm build` per phase (catches RSC boundary breaks).
-2. `pnpm start -p 3111`; eyeball all 6 routes + login, **including demo-mode empty states**.
+1. `npm run lint && npm run build` per phase (catches RSC boundary breaks).
+2. `npm run start -- -p 3111`; eyeball all 6 routes + login, **including demo-mode empty states**.
 3. RSC audit: every kit file `"use client"`; only serializable props cross server→client.
 4. Reduced-motion emulation: animated pieces stop or fade static.
 5. Theme integrity: grep new files for hex literals (must be CSS vars/props); `.dark` sanity check.
-6. Lockfile: `git status` shows no package.json/pnpm-lock drift (else `pnpm install` + both committed together).
+6. Lockfile: `git status` shows no package.json/package-lock drift (else `npm install --package-lock-only` + both committed together).
 
 ## Critical files
 

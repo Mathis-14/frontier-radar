@@ -40,8 +40,8 @@ Access to the live deployment is by credential only — shared privately, never 
 
 1. **Supabase**: create a project at supabase.com → run `supabase/migrations/0001_init.sql` in the SQL Editor → Authentication → Users → Add user (your login; signups stay disabled).
 2. **Env**: fill `.env.local` (see keys below) — same values go in Vercel → Project → Settings → Environment Variables.
-3. **Seed** (optional): `pnpm seed` loads the fixture payload through the real ingest code path.
-4. **Run**: `pnpm dev` — or deploy by importing this repo in Vercel (root = this folder).
+3. **Seed** (optional): `npm run seed` loads the fixture payload through the real ingest code path.
+4. **Run**: `npm run dev` — or deploy by importing this repo in Vercel (root = this folder).
 
 | Env var | Where it comes from |
 |---|---|

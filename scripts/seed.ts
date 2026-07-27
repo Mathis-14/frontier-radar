@@ -1,6 +1,6 @@
 /**
  * Seed the database with the fixture payload — same code path as /api/ingest.
- * Usage: pnpm seed   (requires NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env.local)
+ * Usage: npm run seed   (requires NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env.local)
  */
 import { config } from "dotenv";
 config({ path: ".env.local" });

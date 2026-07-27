@@ -1,4 +1,5 @@
 import { ContactsManager } from "@/components/networking/contacts-manager";
+import { NetworkGraph } from "@/components/networking/network-graph";
 import { SuggestionCards } from "@/components/networking/suggestion-cards";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getContacts, getSuggestedContacts } from "@/lib/queries";
@@ -17,6 +18,8 @@ export default async function NetworkingPage() {
           spots in each morning&apos;s news (public info only).
         </p>
       </div>
+
+      <NetworkGraph contacts={contacts} suggestions={suggestions} />
 
       <Card>
         <CardHeader>
