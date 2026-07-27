@@ -41,3 +41,9 @@ yarn-error.log*
 next-env.d.ts
 LOGIN-local.txt
 IDS.env
+
+# local-only (not part of GitHub tree)
+/agent/
+/app/
+NEXT-DIRECTIONS.md
+.pnpm-store/
