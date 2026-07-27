@@ -156,6 +156,13 @@
   --sidebar-ring: #d98d5c;
 }
 
+/* ── Networking particle graph: intentionally light in every app theme ────── */
+.networking-graph-surface {
+  --network-graph-background: #faf6ef;
+  --network-graph-ink: #2b2420;
+  --network-graph-accent: #c4703f;
+}
+
 /* ── Radar-sweep brand tile (in-house, sidebar) ─────────────────────────── */
 @keyframes radar-sweep {
   to { transform: rotate(360deg); }

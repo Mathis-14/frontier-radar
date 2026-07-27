@@ -32,7 +32,7 @@ src/components/kit/
    would add the `motion` package (duplicating `framer-motion`) and churn the frozen
    lockfile. Rewrite `motion/react` imports to `framer-motion` (identical API in v12).
 5. **Zero new npm packages.** Animations run on the already-installed
-   `framer-motion@12` + `gsap@3.15`. Escape hatch: one deliberate `pnpm add` with the
+   `framer-motion@12` + `gsap@3.15`. Escape hatch: one deliberate `npm install` with the
    lockfile committed in the same commit.
 6. **Every kit file is a client component** (`"use client"`); only serializable props
    cross the server→client boundary (see the `StatTile.format` hint precedent).

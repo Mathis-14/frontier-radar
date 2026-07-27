@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { X } from "lucide-react";
 import { MagneticActionButton } from "@/components/kit/magnetic-button";
 import { SpotlightCard } from "@/components/kit/spotlight-card";
+import { formatPersonAffiliation } from "@/components/networking/person-label";
 import { Button } from "@/components/ui/button";
 import type { SuggestedContactRow } from "@/lib/types";
 
@@ -46,7 +47,7 @@ export function SuggestionCards({ suggestions }: { suggestions: SuggestedContact
             <div>
               <p className="font-medium">{s.full_name}</p>
               <p className="text-sm text-muted-foreground">
-                {[s.role, s.company].filter(Boolean).join(" · ")}
+                {formatPersonAffiliation(s)}
               </p>
             </div>
             {s.source_url && (
