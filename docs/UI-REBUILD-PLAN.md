@@ -54,7 +54,7 @@ src/components/kit/
 ```
 
 Rules, written to a new `docs/UI-KIT.md` (linked from `AGENTS.md`; `docs/agent-context/roadmap-state.md` updated on ship):
-1. Sourcing map: OriginKit MCP = effects (search free, get_component costs budget — always search first); ReactBits = structural cards/nav/lists; MagicUI = tickers/marquees/borders/buttons; 21st.dev only for a named gap. Unfit fetches archived in `originkit-archive/` so budget is never re-spent.
+1. Sourcing map: OriginKit MCP = effects (search free, get_component costs budget — always search first); ReactBits = structural cards/nav/lists; MagicUI = tickers/marquees/borders/buttons; 21st.dev only for a named gap. Unfit fetches archived in `agent/originkit-archive/` (local-only, gitignored) so budget is never re-spent.
 2. Vendor header contract: `// @ts-nocheck — vendored <lib>` + source URL + fetch date + local modifications list.
 3. Pages/sections never import `kit/vendor/**` — adapters only, fully typed, theme via CSS vars (hardcoded vendor colors lifted to props).
 4. Cut over the ~8 existing import sites in one commit; no re-export shims.
