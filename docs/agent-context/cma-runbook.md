@@ -1,18 +1,18 @@
 # CMA runbook notes — live objects & Managed Agents API
 
-Full launch sequence: `../agent/LAUNCH.md` (resumable; every step sources `IDS.env` and
+Full launch sequence: `agent/LAUNCH.md` (resumable; every step sources `IDS.env` and
 skips existing objects). This file holds the lookup recipes and API facts around it.
 
 ## Live objects (recipe, never hardcode)
 
 ```bash
-cat ../agent/IDS.env   # AGENT_ID (coordinator, claude-opus-4-8), AGENT_VERSION (last line wins),
+cat agent/IDS.env   # AGENT_ID (coordinator, claude-opus-4-8), AGENT_VERSION (last line wins),
                        # RADAR_{NEWS,BENCHMARKS,FINANCE,COMMUNITY}_{ID,VERSION} (claude-sonnet-4-6),
                        # ENV_ID, MEMSTORE_ID, SESSION_ID, REGRESSION_SESSION_ID
 ```
 
 The agent is a **multiagent coordinator** with 4 specialists (definitions in
-`../agent/subagents/*.json`; see `multiagent-plan.md`). Versions move often — NEVER trust a
+`agent/subagents/*.json`; see `multiagent-plan.md`). Versions move often — NEVER trust a
 written snapshot; read the last `AGENT_VERSION`/`RADAR_*_VERSION` lines of IDS.env (source
 is last-wins) or GET the agent. There is still **no VAULT_ID and no DEPLOYMENT_ID** — the
 07:00 Europe/Paris cron does not exist yet; dashboard data so far was ingested manually
@@ -55,7 +55,7 @@ curl -sS "$BASE/models" "${H[@]:0:4}"   # verify model IDs (claude-sonnet-4-6 co
 - Roster pinned to versions resolved at coordinator create/update — updating a specialist
   does NOT propagate until the coordinator is updated too (LAUNCH.md step 1b re-run).
 - Regression gate for agent changes: LAUNCH.md step 5b — files-only session, no vault
-  needed; compare vs `../agent/evals/` and check memory `content_size_bytes` unchanged.
+  needed; compare vs `agent/evals/` and check memory `content_size_bytes` unchanged.
 - Limits: 1 nesting level, 20 unique roster agents, 25 concurrent threads.
 - Docs: platform.claude.com/docs/en/managed-agents/{multiagent-orchestration,agent-setup,
   scheduled-deployments,memory}.
