@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, MotionConfig } from "framer-motion";
 import { BarChart3, Building2, CircleDollarSign, LogOut, Radar, Sparkles, Users } from "lucide-react";
+import { AuthorCredit } from "@/components/author-credit";
 import { DotBackdrop } from "@/components/kit/dot-backdrop";
 import { ShinyText } from "@/components/kit/shiny-text";
 import { isSupabaseBrowserConfigured } from "@/lib/env";
@@ -19,6 +20,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 
 const NAV = [
@@ -99,6 +101,8 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <SidebarSeparator />
+        <AuthorCredit className="px-2 pb-1 text-sidebar-foreground/60 hover:text-sidebar-foreground" />
       </SidebarFooter>
     </Sidebar>
   );

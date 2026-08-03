@@ -1,4 +1,4 @@
-# Multi-agent CMA rebuild — approved plan (2026-07-23)
+# Multi-agent CMA rebuild — plan (SHIPPED 2026-07-23 as PR #2 — kept for reference)
 
 Founder-approved. Splits the single do-everything agent into a coordinator + 4 domain
 specialists using the Managed Agents native `multiagent` coordinator feature.
@@ -45,15 +45,15 @@ produced 6 benchmark scores from one page and one misshaped finance event (see
 
 ## Implementation steps (new branch off main)
 
-1. Write 4 specialist definitions in `../agent/` (e.g. `subagents/*.json`) —
+1. Write 4 specialist definitions in `agent/` (e.g. `subagents/*.json`) —
    `claude-sonnet-4-6`, `tools: [{"type":"agent_toolset_20260401"}]`, focused system prompts.
-2. Update `../agent/agent.json` → coordinator: add `multiagent.agents` roster (4 IDs),
+2. Update `agent/agent.json` → coordinator: add `multiagent.agents` roster (4 IDs),
    rewrite system prompt to delegate → merge → synthesize → deliver (payload §5 envelope
    unchanged). This bumps the agent to v3.
-3. Extend `../agent/LAUNCH.md`: new step creating the specialists BEFORE the agent
+3. Extend `agent/LAUNCH.md`: new step creating the specialists BEFORE the agent
    create/update step; append the 4 new IDs to `IDS.env`.
 4. `outcome.md` rubric unchanged (grades the coordinator's final payload).
-5. Regression gate: manual test session vs `../agent/evals/case-01/` BEFORE any
+5. Regression gate: manual test session vs `agent/evals/case-01/` BEFORE any
    vault/deployment step (which stay blocked on the human steps in `roadmap-state.md`).
 
 ## Managed Agents API gotchas for this build

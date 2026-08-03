@@ -3,7 +3,7 @@
 ## Ingest contract (single source of truth)
 
 `src/lib/ingest/schema.ts` — zod envelope v1. The CMA system prompt (§5 in
-`../agent/agent.json`) mirrors it; **change both together**. Enforced: http(s)-only URLs
+`agent/agent.json`) mirrors it; **change both together**. Enforced: http(s)-only URLs
 (XSS guard — agent input is untrusted web content), `community.source ∈ hn|reddit|x`,
 gauge enum, `YYYY-MM-DD` dates.
 

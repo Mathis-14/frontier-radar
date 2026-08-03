@@ -20,7 +20,7 @@ src/components/kit/
    ambient, particles — it ships no structural cards/sidebars/nav). `search` is free;
    `get_component` costs budget — **always search first**. ReactBits = structural
    cards/nav/lists. MagicUI = tickers/marquees/borders/buttons. 21st.dev only for a
-   named gap. Unfit OriginKit fetches are archived in `originkit-archive/` so budget
+   named gap. Unfit OriginKit fetches are archived in `agent/originkit-archive/` (local-only, gitignored) so budget
    is never re-spent on them.
 2. **Vendor header contract.** Every `vendor/` file starts with:
    `// @ts-nocheck — vendored <lib>` + source URL + fetch date + a list of local
